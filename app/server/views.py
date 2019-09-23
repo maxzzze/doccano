@@ -19,6 +19,9 @@ from .forms import ProjectForm
 from .models import Document, Project
 from app import settings
 
+import csv
+csv.field_size_limit(100000000)
+
 logger = logging.getLogger(__name__)
 
 
@@ -183,10 +186,6 @@ class DataDownloadFile(SuperUserMixin, LoginRequiredMixin, View):
 class LoginView(BaseLoginView):
     template_name = 'login.html'
     redirect_authenticated_user = True
-    extra_context = {
-        'github_login': bool(settings.SOCIAL_AUTH_GITHUB_KEY),
-        'aad_login': bool(settings.SOCIAL_AUTH_AZUREAD_TENANT_OAUTH2_TENANT_ID),
-    }
 
     def get_context_data(self, **kwargs):
         context = super(LoginView, self).get_context_data(**kwargs)

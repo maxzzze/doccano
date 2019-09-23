@@ -21,11 +21,9 @@ COPY . /doccano
 WORKDIR /doccano
 
 ENV DEBUG="True"
-ENV SECRET_KEY="change-me-in-production"
+ENV SECRET_KEY="somet_secret"
 ENV PORT="80"
 ENV WORKERS="2"
-ENV GOOGLE_TRACKING_ID=""
-ENV AZURE_APPINSIGHTS_IKEY=""
 
 EXPOSE ${PORT}
 

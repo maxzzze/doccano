@@ -1,0 +1,15 @@
+# [START runtime]
+env: flex
+entrypoint: gunicorn --bind="0.0.0.0:${PORT:-8000}" --workers="${WORKERS:-1}" --pythonpath=app app.wsgi --timeout 300
+
+beta_settings:
+    cloud_sql_instances: nyu-annotate:us-central1:annotations-instance
+# [END runtime]
+
+
+# build:
+#   docker:
+#     web: Dockerfile
+#
+# run:
+#   web: /doccano/tools/run.sh

@@ -29,7 +29,4 @@ urlpatterns = [
     path('projects/<int:project_id>/labels/', LabelView.as_view(), name='label-management'),
     path('projects/<int:project_id>/stats/', StatsView.as_view(), name='stats'),
     path('projects/<int:project_id>/guideline/', GuidelineView.as_view(), name='guideline'),
-    path('demo/text-classification/', DemoTextClassification.as_view(), name='demo-text-classification'),
-    path('demo/named-entity-recognition/', DemoNamedEntityRecognition.as_view(), name='demo-named-entity-recognition'),
-    path('demo/translation/', DemoTranslation.as_view(), name='demo-translation'),
 ]

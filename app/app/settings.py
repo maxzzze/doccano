@@ -116,14 +116,25 @@ SOCIAL_AUTH_AZUREAD_TENANT_OAUTH2_TENANT_ID = os.getenv('OAUTH_AAD_TENANT')
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # If you are using Cloud SQL for MySQL rather than PostgreSQL, set
+        # 'ENGINE': 'django.db.backends.mysql' instead of the following.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'annotations',
+        'USER': 'annotation_app',
+        'PASSWORD': '![q.Mt?Z\pN,bM.ORQXQw(',
+        # For MySQL, set 'PORT': '3306' instead of the following. Any Cloud
+        # SQL Proxy instances running locally must also be set to tcp:3306.
+        'PORT': '5432',
     }
 }
-
+DATABASES['default']['HOST'] = '/cloudsql/nyu-annotate:us-central1:annotations-instance'
+if os.getenv('GAE_INSTANCE'):
+    pass
+else:
+    DATABASES['default']['HOST'] = '127.0.0.1'
 
 # Password validation
-# https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
+# https://docs.djan/cloudsql/nyu-annotate:us-central1:annotations-instance/goproject.com/en/2.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -169,8 +180,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
-
-STATIC_URL = '/static/'
+# In mysite/settings.py, set the value of STATIC_URL to this URL:
+STATIC_URL = 'https://storage.googleapis.com/annotations_bucket/static/'
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/projects/'
@@ -187,13 +198,6 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Size of the batch for creating documents
 # on the import phase
-IMPORT_BATCH_SIZE = 500
-
-GOOGLE_TRACKING_ID = os.getenv('GOOGLE_TRACKING_ID', 'UA-125643874-2')
-
-AZURE_APPINSIGHTS_IKEY = os.getenv('AZURE_APPINSIGHTS_IKEY')
-APPLICATION_INSIGHTS = {
-    'ikey': AZURE_APPINSIGHTS_IKEY if AZURE_APPINSIGHTS_IKEY else None,
-}
+IMPORT_BATCH_SIZE = 5000
 
 django_heroku.settings(locals(), test_runner=False)
